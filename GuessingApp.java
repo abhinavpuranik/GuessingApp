@@ -19,50 +19,57 @@ public class GuessingApp {
         gameConfig.showRules();
 
         Scanner scanner = new Scanner(System.in);
+        boolean restart;
 
         System.out.println("================================");
         System.out.println("Let's start the game!");
         System.out.println("================================");
 
-        System.out.print("Enter your name: ");
-        String player = scanner.nextLine();
+        do{
+            System.out.print("Enter your name: ");
+            String player = scanner.nextLine();
 
 
 
 
-        //attempts and hints used counters
-        int attempts = 0;
-        int hintsUsed = 0;
+            //attempts and hints used counters
+            int attempts = 0;
+            int hintsUsed = 0;
 
-        boolean win = false;
-        while(attempts < gameConfig.getMaxAttempts()) {
+            boolean win = false;
+            while(attempts < gameConfig.getMaxAttempts()) {
 
 
-            System.out.print("Enter your guess : ");
-            int guess = ValidationService.validateInput(scanner.nextLine());
-            attempts++;
+                System.out.print("Enter your guess : ");
+                int guess = ValidationService.validateInput(scanner.nextLine());
+                attempts++;
 
-            String result = GuessValidator.validateGuess(guess, gameConfig.getTargetNumber());
-            System.out.println(result);
+                String result = GuessValidator.validateGuess(guess, gameConfig.getTargetNumber());
+                System.out.println(result);
 
-            if("CORRECT".equals(result)) {
-                win = true;
-                break;
+                if("CORRECT".equals(result)) {
+                    win = true;
+                    break;
+
+                }
+
+                if(!"CORRECT".equals(result) && hintsUsed < gameConfig.getMaxHints()) {
+                    hintsUsed++;
+                    System.out.println(HintService.generateHint(gameConfig.getTargetNumber(), hintsUsed));
+
+                }
+
+                System.out.println(result);
 
             }
 
-            if(!"CORRECT".equals(result) && hintsUsed < gameConfig.getMaxHints()) {
-                hintsUsed++;
-                System.out.println(HintService.generateHint(gameConfig.getTargetNumber(), hintsUsed));
+            StorageService.saveResult(player, attempts, win);
+            
+            restart = GameController.restartGame(scanner);
 
-            }
+    }while(restart);
+    
 
-            System.out.println(result);
-
-        }
-
-        StorageService.saveResult(player, attempts, win);
-        scanner.close();
      
     }
 }

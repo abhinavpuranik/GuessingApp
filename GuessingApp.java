@@ -12,7 +12,7 @@ Guessing App UC1 - Game Initiilization
 import java.util.Scanner;
 
 public class GuessingApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidInputException {
         GameConfig gameConfig = new GameConfig();
         gameConfig.showRules();
 
@@ -23,8 +23,10 @@ public class GuessingApp {
         int hintsUsed = 0;
 
         while(attempts < gameConfig.getMaxAttempts()) {
+
+
             System.out.print("Enter your guess : ");
-            int guess = scanner.nextInt();
+            int guess = ValidationService.validateInput(scanner.nextLine());
             attempts++;
 
             String result = GuessValidator.validateGuess(guess, gameConfig.getTargetNumber());

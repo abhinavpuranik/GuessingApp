@@ -1,3 +1,7 @@
+/*
+  GameConfig class to manage game settings, including the target number, maximum attempts, and hints. It also includes a method to display the game rules to the user.
+*/
+
 import java.util.Random;
 
 public class GameConfig {
@@ -30,6 +34,6 @@ public class GameConfig {
         System.out.println("You can also use up to " + MAX_HINTS + " hints to help you guess.");
         System.out.println("Good luck!");
     }
-    
+
 
 }

@@ -1,3 +1,8 @@
+/*
+ ValidationService class to validate user input, ensuring that it is an integer within the specified range (1-100). 
+ It throws an InvalidInputException for invalid inputs, which can be handled in the main game loop to provide feedback to the user.
+*/
+
 public class ValidationService {
     
     public static int validateInput(String input) throws InvalidInputException {

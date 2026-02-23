@@ -13,15 +13,28 @@ import java.util.Scanner;
 
 public class GuessingApp {
     public static void main(String[] args) throws InvalidInputException {
+
+
         GameConfig gameConfig = new GameConfig();
         gameConfig.showRules();
 
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("================================");
+        System.out.println("Let's start the game!");
+        System.out.println("================================");
+
+        System.out.print("Enter your name: ");
+        String player = scanner.nextLine();
+
+
+
+
         //attempts and hints used counters
         int attempts = 0;
         int hintsUsed = 0;
 
+        boolean win = false;
         while(attempts < gameConfig.getMaxAttempts()) {
 
 
@@ -33,6 +46,7 @@ public class GuessingApp {
             System.out.println(result);
 
             if("CORRECT".equals(result)) {
+                win = true;
                 break;
 
             }
@@ -46,6 +60,9 @@ public class GuessingApp {
             System.out.println(result);
 
         }
+
+        StorageService.saveResult(player, attempts, win);
+        scanner.close();
      
     }
 }

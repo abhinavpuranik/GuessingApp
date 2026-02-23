@@ -17,7 +17,10 @@ public class GuessingApp {
         gameConfig.showRules();
 
         Scanner scanner = new Scanner(System.in);
+
+        //attempts and hints used counters
         int attempts = 0;
+        int hintsUsed = 0;
 
         while(attempts < gameConfig.getMaxAttempts()) {
             System.out.print("Enter your guess : ");
@@ -31,6 +34,15 @@ public class GuessingApp {
                 break;
 
             }
+
+            if(!"CORRECT".equals(result) && hintsUsed < gameConfig.getMaxHints()) {
+                hintsUsed++;
+                System.out.println(HintService.generateHint(gameConfig.getTargetNumber(), hintsUsed));
+
+            }
+
+            System.out.println(result);
+
         }
      
     }
